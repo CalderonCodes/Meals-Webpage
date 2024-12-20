@@ -63,8 +63,8 @@
   .instructions {
     font-size: 1.25rem;
     line-height: 1.5;
-    background-color: #6e6464;
-    color: #13120f;
+    background-color: #000000;
+    color: #ffff;
     border-radius: 8px;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
     padding: 2rem;
@@ -73,6 +73,29 @@
     animation: fade-slide-in-from-bottom 1s ease-out forwards;
   }
   
+
+  
+  .step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .stepNumber {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #f9572a, #ff8a05);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: 10px;
+  }
+  
+  .step p {
+    font-size: 1rem;
+    color: #ffff;
+  }
+
   .loading {
     font-size: 3rem;
     text-align: center;

@@ -11,8 +11,15 @@ function Meal({params}) {
   if(!meal){
     notFound();
   }
-
-  meal.instructions = meal.instructions.replace(/\n/g, '<br />')
+  const instructions = meal.instructions
+    .trim()
+    .split(/\n+/)
+    .filter((line) => line)
+    .map((line, index) => {
+      const stepMatch = line.match(/^\d+\.\s*(.+)/); // Match "1. " or similar
+      const content = stepMatch ? stepMatch[1] : line;
+      return { step: index + 1, content };
+    });
 
   return (
     <>
@@ -31,9 +38,14 @@ function Meal({params}) {
       </div>
     </header>
     <main>
-      <p className={classes.instructions} dangerouslySetInnerHTML={{
-        __html: meal.instructions,
-      }}></p>
+    <ul className={classes.instructions}>
+          {instructions.map(({ step, content }) => (
+            <li key={step} className={classes.step}>
+              <div className={classes.stepNumber}>{step}</div>
+              <p>{content}</p>
+            </li>
+          ))}
+        </ul>
     </main>
     </>
   )
