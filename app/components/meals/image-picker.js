@@ -6,14 +6,14 @@ import Image from 'next/image';
 export default function ImagePicker({ label, name }) {
 
     const imageInput = useRef();
-    const [pickedImage, setPickedImage] = userState()
+    const [pickedImage, setPickedImage] = useState()
 
     function handlePickClick(){
         imageInput.current.click();
     }
 
     function handleImageChange(event){
-        const file = event.target.file[0]
+        const file = event.target.files[0]
 
         if(!file){
             setPickedImage(null)
@@ -34,7 +34,7 @@ export default function ImagePicker({ label, name }) {
       <div className={classes.controls}>
         <div className={classes.preview}>
           {!pickedImage && <p>No image picked yet</p>}
-          {pickedImage && <Image src={pickedImage} alt='Prevew' />}
+          {pickedImage && <Image src={pickedImage} alt='Prevew' fill/>}
         </div>
         <input className={classes.input}
           type="file"
