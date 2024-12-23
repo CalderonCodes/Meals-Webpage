@@ -1,6 +1,8 @@
 const sql = require('better-sqlite3');
 const db = sql('meals.db');
 
+
+
 const dummyMeals = [
   {
     title: 'Juicy Cheese Burger',
@@ -134,17 +136,37 @@ const dummyMeals = [
   },
 ];
 
+// Crear tabla meals
 db.prepare(`
-   CREATE TABLE IF NOT EXISTS meals (
-       id INTEGER PRIMARY KEY AUTOINCREMENT,
-       slug TEXT NOT NULL UNIQUE,
-       title TEXT NOT NULL,
-       image TEXT NOT NULL,
-       summary TEXT NOT NULL,
-       instructions TEXT NOT NULL,
-       creator TEXT NOT NULL,
-       creator_email TEXT NOT NULL
-    )
+  CREATE TABLE IF NOT EXISTS meals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
+    image TEXT,
+    summary TEXT,
+    instructions TEXT,
+    creator TEXT,
+    creator_email TEXT
+  )
+`).run();
+
+// Crear tabla tags
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS tags (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL
+  )
+`).run();
+
+// Crear tabla intermedia meal_tags
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS meal_tags (
+    meal_id INTEGER NOT NULL,
+    tag_id INTEGER NOT NULL,
+    FOREIGN KEY (meal_id) REFERENCES meals(id),
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    UNIQUE(meal_id, tag_id)
+  )
 `).run();
 
 async function initData() {
